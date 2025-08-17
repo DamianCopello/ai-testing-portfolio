@@ -1,23 +1,23 @@
-# AI Testing Portfolio
+# Level 1 — API Smoke Tests (Robot Framework)
 
-A single repository tracking my journey into AI/ML testing, organized by **levels**.
+**Goal:** Prove I can run clean, reliable API smoke tests with Robot Framework:
+- Happy paths (status 200, JSON shape, filtering)
+- One negative path (404) using `expected_status`
 
-## Progress
-- [x] **Level 1 — API Smoke Tests (Robot Framework)**
-- [ ] Level 2 — Project structure, variables & reusable keywords
-- [ ] Level 3 — Auth & environments (tokens, .env, secrets)
-- [ ] Level 4 — Basic model/LLM checks (latency, availability, guardrails)
-- [ ] Level 5 — Quality evals for AI output (baselines, heuristics)
+## What’s tested
+- `GET /posts/1` → **200**, JSON, keys: `userId`, `id`, `title`, `body` and `id == 1`
+- `GET /users` → **200**, list of **10** users, first has `id`, `name`, `email`
+- `GET /posts?userId=1` → filter works; **all** items have `userId == 1`
+- Negative: unknown path → **404** (with `expected_status=404`)
 
-## How this repo is organized
-- `level-01/` — API smoke tests (finished)
-- `level-02/` — (coming soon)
-- `level-03/` — (coming soon)
+**Public API:** https://jsonplaceholder.typicode.com
 
-## How to run a level locally (general)
-1. `cd level-XX`
-2. `pip install -r requirements.txt`
-3. `robot -d results *.robot`
-4. Open `results/report.html`
+## Files
+- `api_smoke.robot` — test suite
+- `requirements.txt` — install everything needed
+- `images/pass.png` — screenshot of a passing run
 
-Each level folder has its own README with exact steps.
+## How to run (local)
+```bash
+pip install -r requirements.txt
+robot -d results api_smoke.robot
